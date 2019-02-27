@@ -1,0 +1,20 @@
+  - name: Download lsyncd-status.sh 
+    get_url: 
+      url: https://raw.githubusercontent.com/racker/rackspace-monitoring-agent-plugins-contrib/master/lsyncd-status.sh 
+      dest: /usr/lib/rackspace-monitoring-agent/plugins/lsyncd-status.sh
+      mode: 0744
+      owner: root
+      group: root
+    notify: restart rackspace-monitoring-agent
+
+  - name: Install bc package (Debian)
+    apt: name=bc state=latest update_cache=yes
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: Install bc package (RHEL)
+    yum: name=bc state=latest
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: Copy lsyncd_status.yaml 
+    template: src=lsyncd_status.yaml.j2 dest=/etc/rackspace-monitoring-agent.conf.d/lsyncd_status.yaml
+    notify: restart rackspace-monitoring-agent

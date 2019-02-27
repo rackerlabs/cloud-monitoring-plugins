@@ -1,0 +1,5 @@
+  - name: Check /etc/rackspace-monitoring-agent.conf.d/
+    file: dest=/etc/rackspace-monitoring-agent.conf.d/ state=directory owner=root group=root
+
+  - name: Check /usr/lib/rackspace-monitoring-agent/plugins
+    file: dest=/usr/lib/rackspace-monitoring-agent/plugins state=directory owner=root group=root

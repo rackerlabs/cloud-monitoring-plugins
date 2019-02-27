@@ -1,0 +1,18 @@
+type        : agent.plugin
+label       : MySQL Replication
+disabled    : false
+period      : 60
+timeout     : 30
+details     :
+    file    : mysql_replication.py
+alarms      :
+    alarm1  :
+        label                 : MySQL Replication Alarm
+        notification_plan_id  : {{notification_plan}} 
+        criteria              : |
+          if (metric['SLAVE_STATUS'] != 'ONLINE') {
+            return new AlarmStatus(CRITICAL, 'MySQL Replication is OFFLINE.');
+          }
+          if (metric['SLAVE_STATUS'] == 'ONLINE' && metric['SECONDS_BEHIND_MASTER'] >= 1800) {
+            return new AlarmStatus(CRITICAL, 'MySQL Replication ONLINE - slave behind master.');
+          }

@@ -1,0 +1,8 @@
+---
+- hosts: all
+  user: root
+  roles:
+    - common 
+    - { role: lsyncd_status, tags: lsyncd_status }
+  vars:
+    host: localhost

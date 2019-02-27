@@ -1,0 +1,12 @@
+  - name: Download mysql_replication.py
+    get_url: 
+      url: https://raw.github.com/racker/rackspace-monitoring-agent-plugins-contrib/master/mysql_replication.py
+      dest: /usr/lib/rackspace-monitoring-agent/plugins/mysql_replication.py
+      mode: 0744
+      owner: root
+      group: root
+    notify: restart rackspace-monitoring-agent
+
+  - name: Copy mysql_replication.yaml
+    template: src=mysql_replication.yaml.j2 dest=/etc/rackspace-monitoring-agent.conf.d/mysql_replication.yaml
+    notify: restart rackspace-monitoring-agent

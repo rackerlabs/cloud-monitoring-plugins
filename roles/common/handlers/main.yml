@@ -1,0 +1,2 @@
+  - name: restart rackspace-monitoring-agent
+    service: name=rackspace-monitoring-agent state=restarted

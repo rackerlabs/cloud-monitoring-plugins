@@ -1,0 +1,20 @@
+type        : agent.apache
+label       : 'Apache Metrics'
+disabled    : false
+period      : 60
+timeout     : 30
+details     :
+    url     : http://localhost:{{apache_port}}/{{server-status}}
+alarms      :
+    alarm1  :
+        label                 : 'Apache Idle Workers'
+        notification_plan_id  : {{notification_plan}}
+        criteria              : |
+          :set consecutiveCount=5
+          if (metric['idle_workers'] < 1) {
+            return new AlarmStatus(CRITICAL, 'No idle workers!');
+          }
+          if (metric['idle_workers'] < 5) {
+            return new AlarmStatus(WARNING, 'Fewer than 5 idle workers.');
+          }
+          return new AlarmStatus(OK, 'More than 5 idle workers: #{idle_workers}.');

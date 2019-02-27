@@ -1,0 +1,19 @@
+type        : agent.memory
+label       : 'Memory Usage'
+disabled    : false
+period      : 60
+timeout     : 10
+alarms      :
+    mem-and-swap-usage  :
+        label                 : 'Memory and Swap Usage'
+        notification_plan_id  : {{notification_plan}}
+        criteria              : |
+            if (metric['swap_total'] > 0 && percentage(metric['swap_used'], metric['swap_total']) > 90
+                && percentage(metric['actual_used'], metric['total']) > 95) {
+              return new AlarmStatus(CRITICAL, 'Less than 5% of memory and 10% of swap available');
+            }
+
+            if (metric['swap_total'] == 0 && percentage(metric['actual_used'], metric['total']) > 95) {
+              return new AlarmStatus(CRITICAL, 'Less than 5% of memory available');
+            }
+            return new AlarmStatus(OK, 'More than 5% of memory available');

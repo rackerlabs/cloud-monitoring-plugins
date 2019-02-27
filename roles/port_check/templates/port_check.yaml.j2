@@ -1,0 +1,17 @@
+type        : agent.plugin
+label       : Port Check [{{host}}:{{port}}] 
+disabled    : false
+period      : 60
+timeout     : 30
+details     :
+    file    : port_check.py
+    args    : [{{host}},{{port}}]
+alarms      :
+    alarm-{{port}}  :
+        label                 : Port Check [{{host}}:{{port}}] Alarm
+        notification_plan_id  : {{notification_plan}} 
+        criteria              : |
+          if (metric['status'] != 'OPEN') {
+            return new AlarmStatus(CRITICAL, 'Port #{port} is closed.');
+          }
+          return new AlarmStatus(OK, 'Port #{port} is open.');

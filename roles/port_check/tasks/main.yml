@@ -1,0 +1,16 @@
+  - name: "Check if port variable exists"
+    fail: msg="Bailing out. You are required to set the port." 
+    when: port is not defined
+
+  - name: Download port_check.py 
+    get_url: 
+      url: https://raw.githubusercontent.com/racker/rackspace-monitoring-agent-plugins-contrib/master/port_check.py 
+      dest: /usr/lib/rackspace-monitoring-agent/plugins/port_check.py
+      mode: 0744
+      owner: root
+      group: root
+    notify: restart rackspace-monitoring-agent
+
+  - name: Copy port_check.yaml
+    template: src=port_check.yaml.j2 dest=/etc/rackspace-monitoring-agent.conf.d/port_check_{{host}}_{{port}}.yaml
+    notify: restart rackspace-monitoring-agent

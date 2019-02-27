@@ -1,0 +1,9 @@
+---
+- hosts: all
+  user: root
+  gather_facts: false
+  roles:
+    - common 
+    - { role: port_check, tags: port_check }
+  vars:
+    host: localhost
