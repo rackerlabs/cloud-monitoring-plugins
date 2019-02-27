@@ -21,7 +21,7 @@ Default command:
 ### Notification plan
 *Note* the default notification plan is: npManaged. This is for "Managed Operations" customers. Notification plan change example:
 
-```ansible-playbook -i hosts <playbook> -e '{"notification_plan":"npTechnicalContactsEmail"}'
+`ansible-playbook -i hosts <playbook> -e '{"notification_plan":"npTechnicalContactsEmail"}'`
 
 
 ## Modifiers
