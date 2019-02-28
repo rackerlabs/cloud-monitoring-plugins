@@ -8,11 +8,11 @@
     notify: restart rackspace-monitoring-agent
 
   - name: Install bc package (Debian)
-    apt: name=bc state=latest update_cache=yes
+    apt: name=bc state=present update_cache=yes
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
   - name: Install bc package (RHEL)
-    yum: name=bc state=latest
+    yum: name=bc state=present
     when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
   - name: Copy lsyncd_status.yaml 
